@@ -1015,15 +1015,9 @@
       .skip-toast     { display: none; }
     }
 
-    /* Mobile (≤768px): hero text fade transition when scrolled past video */
+    /* Mobile (≤768px): no transition — collision detection snaps opacity instantly */
     @media (max-width: 768px) {
-      .hero-content {
-        transition: opacity 0.2s ease !important;
-      }
-      .hero-content.hero-text-hidden {
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
+      .hero-content { transition: none !important; }
     }
   </style>
 </head>
@@ -1568,17 +1562,17 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    /* ── Mobile only: fade hero text when scrolled past the video section ── */
-    if (window.innerWidth <= 768) {
-      const heroText = document.querySelector('.hero-content');
-      if (heroText && driver) {
-        const fadeObs = new IntersectionObserver(entries => {
-          entries.forEach(e => {
-            heroText.classList.toggle('hero-text-hidden', !e.isIntersecting);
-          });
-        }, { threshold: 0 });
-        fadeObs.observe(driver);
+    /* ── Hero text: instant snap off when bottom edge contacts site content ── */
+    const heroText = document.querySelector('.hero-content');
+    if (heroText && siteCont) {
+      heroText.style.transition = 'none';
+      function checkHeroClip() {
+        heroText.style.opacity =
+          siteCont.getBoundingClientRect().top <= heroText.getBoundingClientRect().bottom
+            ? '0' : '1';
       }
+      window.addEventListener('scroll', checkHeroClip, { passive: true });
+      checkHeroClip();
     }
 
     /* ── Nav links → skip toast ── */
