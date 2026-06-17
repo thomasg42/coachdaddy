@@ -109,6 +109,7 @@
     #site-content.revealed {
       opacity: 1;
       pointer-events: auto;
+      z-index: 35; /* above hero-content (z-index 30) so it covers text on reveal */
     }
 
     /* ─── HERO ────────────────────────────────── */
@@ -170,11 +171,22 @@
       pointer-events: none;
     }
 
+    /* Hero text is fixed independently — never affected by hero opacity */
     .hero-content {
-      position: relative;
-      z-index: 5;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 30;
       text-align: center;
       padding: 0 1.5rem;
+      width: 100%;
+      pointer-events: none; /* scroll passes through */
+    }
+
+    /* Re-enable clicks on the CTA link */
+    .hero-content a {
+      pointer-events: auto;
     }
 
     /* Thin ornamental ring around title */
@@ -1037,17 +1049,19 @@
     <span class="sym" style="font-size:13px; bottom:25%; right:7%; z-index:4; opacity:0.07;">22</span>
 
     <div class="hero-ring"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Sacred. Intentional. Purposeful.</p>
-      <h1 class="hero-title">Coach<br>Daddy</h1>
-      <p class="hero-tagline">Remember Who You Are</p>
-      <p class="hero-disciplines">Life Consulting &ensp;·&ensp; Human Design &ensp;·&ensp; Numerology &ensp;·&ensp; Purpose Activation</p>
-      <a href="#intake" class="hero-cta">Find Out Who You Are</a>
-    </div>
     <div class="scroll-cue">
       <div class="scroll-cue-line"></div>
     </div>
   </section>
+
+  <!-- Hero text — fixed independently, outside hero opacity chain -->
+  <div class="hero-content">
+    <p class="hero-eyebrow">Sacred. Intentional. Purposeful.</p>
+    <h1 class="hero-title">Coach<br>Daddy</h1>
+    <p class="hero-tagline">Remember Who You Are</p>
+    <p class="hero-disciplines">Life Consulting &ensp;·&ensp; Human Design &ensp;·&ensp; Numerology &ensp;·&ensp; Purpose Activation</p>
+    <a href="#intake" class="hero-cta">Find Out Who You Are</a>
+  </div>
 
   <!-- ═══ SITE CONTENT — revealed after scroll-jack completes ═══ -->
   <div id="site-content">
