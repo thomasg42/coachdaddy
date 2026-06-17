@@ -111,6 +111,8 @@
       object-position: center;
       z-index: 0;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.5s ease;
     }
 
     /* Dark overlay — keeps text readable */
@@ -891,7 +893,7 @@
 
   <!-- ═══ HERO ══════════════════════════════════════ -->
   <section id="hero">
-    <video id="hero-video" autoplay muted loop playsinline>
+    <video id="hero-video" autoplay muted loop playsinline preload="auto">
       <source src="coach-daddy-hero.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
@@ -1297,6 +1299,69 @@
         success.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     });
+  })();
+
+  /* ─── HERO VIDEO — fade-in + scroll-speed ───────────── */
+  (function () {
+    const vid = document.getElementById('hero-video');
+    if (!vid) return;
+
+    const SPEED_MIN  = 0.3;   // playback rate at top of page
+    const SPEED_MAX  = 0.6;   // playback rate when scrolled
+    const SCROLL_REF = 600;   // scroll distance (px) to reach SPEED_MAX
+
+    /* ── Fade in on load ── */
+    function fadeIn() {
+      vid.style.opacity = '1';
+    }
+
+    /* Try to play immediately; on mobile autoplay may be blocked */
+    const playPromise = vid.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          /* Autoplay succeeded — fade the video in */
+          fadeIn();
+          vid.playbackRate = SPEED_MIN;
+        })
+        .catch(() => {
+          /* Autoplay blocked (common on iOS without interaction)       */
+          /* Show first frame by seeking to 0 and painting one frame,   */
+          /* then fade the element in so the poster-like frame is visible */
+          vid.currentTime = 0;
+          fadeIn();
+          /* Re-attempt play on first user gesture */
+          const unlock = () => {
+            vid.play().catch(() => {});
+            window.removeEventListener('touchstart', unlock);
+            window.removeEventListener('click', unlock);
+          };
+          window.addEventListener('touchstart', unlock, { passive: true });
+          window.addEventListener('click', unlock, { once: true });
+        });
+    } else {
+      /* Older browser — just fade in */
+      fadeIn();
+    }
+
+    /* Also fade in once enough data is loaded (covers slow connections) */
+    vid.addEventListener('canplay', fadeIn, { once: true });
+
+    /* ── Scroll → playback speed ── */
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrollY   = window.scrollY || window.pageYOffset;
+        const progress  = Math.min(scrollY / SCROLL_REF, 1);   // 0 → 1
+        const rate      = SPEED_MIN + (SPEED_MAX - SPEED_MIN) * progress;
+        vid.playbackRate = rate;
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
   })();
   </script>
 
