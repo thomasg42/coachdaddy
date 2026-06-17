@@ -1494,10 +1494,12 @@
     function unlock() {
       if (unlocked) return;
       unlocked = true;
+      /* Freeze video on last frame — keep it visible as static bg */
+      vid.pause();
+      /* Reveal site content — scrolls on top of the frozen video */
       siteCont.classList.add('revealed');
-      hero.style.opacity = '0';
+      /* Hero stays visible (no opacity/display change) */
       hero.style.pointerEvents = 'none';
-      setTimeout(() => { hero.style.display = 'none'; }, 1300);
     }
 
     /* ══════════════════════════════════════════════════
