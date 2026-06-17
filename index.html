@@ -836,12 +836,12 @@
     .side-banner {
       position: fixed;
       top: 0; bottom: 0;
-      width: 44px;
+      width: 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
-      padding: 100px 0 60px;
+      padding: 80px 0 40px;
       z-index: 50;
       pointer-events: none;
       user-select: none;
@@ -851,8 +851,8 @@
     .side-banner-r { right: 0; }
 
     .side-banner span {
-      color: rgba(255, 255, 255, 0.10);
-      font-size: 13px;
+      color: rgba(255, 255, 255, 0.20);
+      font-size: 22px;
       font-family: 'Palatino Linotype', Georgia, serif;
       line-height: 1;
       display: block;
@@ -860,17 +860,43 @@
       font-style: normal;
     }
 
-    /* Footer symbol row */
+    .side-banner span.num {
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Footer symbol rows */
+    .footer-syms-wrap {
+      width: 100%;
+      border-top: 1px solid rgba(184,115,51,0.35);
+      border-bottom: 1px solid rgba(184,115,51,0.35);
+      padding: 1rem 0;
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
     .footer-syms {
       display: flex;
-      gap: 1.6rem;
+      gap: 2.4rem;
       align-items: center;
       justify-content: center;
-      color: rgba(255, 255, 255, 0.15);
-      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 1.75rem;
       font-family: 'Palatino Linotype', Georgia, serif;
-      letter-spacing: 0.05em;
-      padding-top: 0.5rem;
+      line-height: 1;
+    }
+
+    .footer-syms-nums {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 0.7rem;
+      font-family: 'Palatino Linotype', Georgia, serif;
+      letter-spacing: 0.2em;
     }
 
     @media (max-width: 820px) {
@@ -899,6 +925,8 @@
     <div class="hero-overlay"></div>
     <canvas id="hero-canvas"></canvas>
 
+    <!-- Hero center watermark -->
+    <span class="sym" style="font-size:300px; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4; opacity:0.04; color:white;">☥</span>
     <!-- Sacred symbols — hero -->
     <span class="sym" style="font-size:340px; top:-110px; left:-90px; z-index:4; opacity:0.055;">⬡</span>
     <span class="sym" style="font-size:340px; top:-110px; right:-90px; z-index:4; opacity:0.055;">⬡</span>
@@ -958,6 +986,8 @@
 
   <!-- ═══ SERVICES ══════════════════════════════════ -->
   <section id="services">
+    <!-- Services center watermark -->
+    <span class="sym" style="font-size:300px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.04; color:white;">⬡</span>
     <!-- Sacred symbols — services -->
     <span class="sym" style="font-size:220px; top:-40px; right:-50px; opacity:0.045;">⬡</span>
     <span class="sym" style="font-size:160px; bottom:-30px; left:-40px; opacity:0.045;">⬡</span>
@@ -1006,6 +1036,8 @@
   <section id="theme">
     <canvas id="theme-canvas"></canvas>
 
+    <!-- Theme center watermark -->
+    <span class="sym" style="font-size:300px; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2; opacity:0.04; color:white;">∞</span>
     <!-- Sacred symbols — theme -->
     <span class="sym" style="font-size:80px; top:12%; left:6%; z-index:2; opacity:0.07;">⊕</span>
     <span class="sym" style="font-size:13px; top:22%; left:3%; z-index:2; opacity:0.09; letter-spacing:0.4em;">9</span>
@@ -1037,6 +1069,8 @@
 
   <!-- ═══ INTAKE FORM ═══════════════════════════════ -->
   <section id="intake">
+    <!-- Intake center watermark -->
+    <span class="sym" style="font-size:300px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.04; color:white;">⊕</span>
     <!-- Sacred symbols — intake (denser toward bottom) -->
     <span class="sym" style="font-size:320px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.035;">⚔</span>
     <span class="sym" style="font-size:100px; top:5%; left:3%; opacity:0.065;">☥</span>
@@ -1123,15 +1157,28 @@
       </svg>
     </div>
 
-    <!-- Centered sacred symbol row -->
-    <div class="footer-syms" aria-hidden="true">
-      <span>☥</span>
-      <span>✦</span>
-      <span>⬡</span>
-      <span>∞</span>
-      <span>Φ</span>
-      <span>⚔</span>
-      <span>⊕</span>
+    <!-- Centered sacred symbol rows with copper border -->
+    <div class="footer-syms-wrap" aria-hidden="true">
+      <div class="footer-syms">
+        <span>☥</span>
+        <span>✦</span>
+        <span>⬡</span>
+        <span>∞</span>
+        <span>Φ</span>
+        <span>⚔</span>
+        <span>⊕</span>
+      </div>
+      <div class="footer-syms-nums">
+        <span>111</span>
+        <span>222</span>
+        <span>333</span>
+        <span>444</span>
+        <span>999</span>
+        <span>555</span>
+        <span>888</span>
+        <span>777</span>
+        <span>666</span>
+      </div>
     </div>
   </footer>
 
@@ -1375,22 +1422,48 @@
     <span>∞</span>
     <span>Φ</span>
     <span>⚔</span>
-    <span style="font-size:11px;">11</span>
+    <span class="num">111</span>
+    <span class="num">222</span>
+    <span class="num">333</span>
+    <span class="num">999</span>
+    <span class="num">444</span>
+    <span class="num">555</span>
+    <span class="num">666</span>
+    <span class="num">777</span>
+    <span class="num">888</span>
     <span>☥</span>
     <span>✦</span>
     <span>⬡</span>
+    <span>✧</span>
+    <span>⊕</span>
+    <span>∞</span>
+    <span>Φ</span>
+    <span>⚔</span>
   </div>
 
   <div class="side-banner side-banner-r" aria-hidden="true">
+    <span>⚔</span>
+    <span>Φ</span>
+    <span>∞</span>
+    <span>⊕</span>
+    <span>✧</span>
     <span>⬡</span>
     <span>✦</span>
     <span>☥</span>
-    <span>⊕</span>
-    <span>✧</span>
+    <span class="num">888</span>
+    <span class="num">777</span>
+    <span class="num">666</span>
+    <span class="num">555</span>
+    <span class="num">444</span>
+    <span class="num">999</span>
+    <span class="num">333</span>
+    <span class="num">222</span>
+    <span class="num">111</span>
+    <span>⚔</span>
     <span>Φ</span>
     <span>∞</span>
-    <span style="font-size:11px;">22</span>
-    <span>⚔</span>
+    <span>⊕</span>
+    <span>✧</span>
     <span>⬡</span>
     <span>✦</span>
     <span>☥</span>
